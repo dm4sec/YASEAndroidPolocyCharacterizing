@@ -16,14 +16,11 @@ def main():
         pixelpolicyType += pixelpolicy.getType(ty)
         hwpolicyType += hwpolicy.getType(ty)
 
-    diff_a_type = ""
-    diff_b_type = ""
-
-
     diff_a_type = [(str(x) + "\n") for x in pixelpolicyType]
     diff_b_type = [(str(x) + "\n") for x in hwpolicyType]
+    d = difflib.Differ()
 
-    result = difflib.Differ().compare(diff_a_type, diff_b_type)
+    result = d.compare(diff_a_type, diff_b_type)
 
     remove = list(filter(lambda x: x.startswith('- '), result))
     add = list(filter(lambda x: x.startswith('+ '), result))
