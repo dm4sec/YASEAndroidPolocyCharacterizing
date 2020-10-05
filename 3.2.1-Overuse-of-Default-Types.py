@@ -16,22 +16,23 @@ def main():
         pixelpolicyType += pixelpolicy.getType(ty)
         hwpolicyType += hwpolicy.getType(ty)
 
-    diff_a_type = [(str(x) + "\n") for x in pixelpolicyType]
-    diff_b_type = [(str(x) + "\n") for x in hwpolicyType]
+    diff_a_type = [(str(x)) for x in pixelpolicyType]
+    diff_b_type = [(str(x)) for x in hwpolicyType]
     d = difflib.Differ()
 
     result = d.compare(diff_a_type, diff_b_type)
-
     remove = list(filter(lambda x: x.startswith('- '), result))
+    # ugly coding
+    result = d.compare(diff_a_type, diff_b_type)
     add = list(filter(lambda x: x.startswith('+ '), result))
 
     print("-= statistical result =-")
     print("%d rules in pixel use default type" %(len(diff_a_type)))
     print("%d rules in huawei use default type" %(len(diff_b_type)))
     print("huawei removed %d rules in comparison with pixel, which are listed below:" %(len(remove)))
-    print(remove)
+    print('\n'.join([item for item in remove]))
     print("huawei added %d rules in comparison with pixel, which are listed below:" %(len(add)))
-    print(add)
+    print('\n'.join([item for item in add]))
 
     return
 
