@@ -42,7 +42,7 @@ def main():
     add = list(filter(lambda x: x.startswith('+ '), result))
     print('\n'.join([item for item in add]))
 
-    print("Q3: who can access surfaceflinger_tmpfs:")
+    print("Q4: who can access surfaceflinger_tmpfs:")
     for hwAVRule in hwAVRules:
         if hwAVRule[1] == "surfaceflinger_tmpfs":
             print(hwAVRule)
