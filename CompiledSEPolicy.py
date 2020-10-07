@@ -193,3 +193,35 @@ class SELinuxParser(setools.SELinuxPolicy):
                 uselessAVRules.append(avRule)
 
         return len(AVRules), uselessAVRules, len(TERules), uselessTERules
+
+    # analysis in user's code
+    def getAllAVRules(self):
+        sort = True
+
+        AVRules = []
+        def cond_sort(value):
+            """Helper function to sort values according to the sort parameter"""
+            return value if not sort else sorted(value)
+
+        #subject object class perms
+        for terule_ in cond_sort(self.terules()):
+            # allowxperm rules
+            if isinstance(terule_, terule.AVRuleXperm):
+                # "{0.ruletype} {0.source} {0.target}:{0.tclass} {0.xperm_type}"
+                pass
+            # allow/dontaudit/auditallow/neverallow rules
+            elif isinstance(terule_, terule.AVRule):
+                # "{0.ruletype} {0.source} {0.target}:{0.tclass}"
+                if terule_.ruletype == "allow" or terule_.ruletype == "auditallow":
+                    AVRules.append([str(terule_.source), str(terule_.target), str(terule_.tclass), terule_.perms])
+                elif terule_.ruletype == "dontaudit":
+                    pass
+                else:
+                    print("Unhandled AVRule: %s" %(str(terule_.ruletype)))
+            # type_* type enforcement rules
+            elif isinstance(terule_, terule.TERule):
+                pass
+            else:
+                raise RuntimeError("Unhandled TE rule")
+
+        return AVRules
