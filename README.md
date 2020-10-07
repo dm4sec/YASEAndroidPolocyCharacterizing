@@ -5,3 +5,4 @@ Follow  [Characterizing SEAndroid Policies in the Wild](https://arxiv.org/pdf/15
 [Setup venv](https://github.com/dm4sec/BigMAC) firstly to make the code work.
 (sefcontext-parser and swi-prolog should be excluded)
 
+To use seal, you should check out the Python 3 supported [repository](https://github.com/dm4sec/seal) first, then [Setup venv](https://github.com/dm4sec/BigMAC) as well. 
